@@ -1,0 +1,77 @@
+本文档主要是采用ATOM、amWiKi、visual studio code等工作，采用markdown语法编写，编写的静态文档，利用visual studio code编辑器强大的插件功能，可以实现所见即所得的编辑效果。用到了amWiKiForVSCode
+、markdown、paste image等工具
+
+amWiKiForVSCode
+amWiki 是一款基于 Javascript 脚本语言、依赖 Atom 编辑器、使用 Markdown 标记语法的轻量级开源 wiki 文库系统。
+amWiki 致力于让大家可以更简单、更便捷的建设个人和团队文库系统
+此插件将amWiKi的功能移植到了visual studio code中，方便用户采用VSCode强大编辑功能开发个人文库系统。
+
+markdown系列插件
+采用markdown语法可以查看，设置文档的格式，易于编写
+
+paste image插件
+此插件可以方便的将剪切的图片放置到文库中。
+
+visual studio code将这几个插件功能综合起来，在编辑器中编辑文档，也可以实时预览文档所显示的格式。
+
+Atom
+可以将写好的amWiKi文档生成静态网页，方便用户浏览。
+
+1、第一步安装Atom编辑器 https://atom.io/
+2、从Github的amWiKi版本发布下载zip，(windows)解压到
+3、重启Atom(必须)
+4、在 Atom 中 Add Project Folder (添加项目文件夹)，并指向刚创建的文件夹
+5、在 Atom 刚创建的项目下新建 config.json 文件，并按 json 格式配置以下属性：
+
+name，您的文库名称，设置但为空或不设置将显示默认名
+ver，文本版本号或维护者名号，设置但为空将不显示，注意诺不设置此属性将显示 amWiki 作者
+logo，logo 的 url，设置但为空或不设置将显示默认 logo
+colour，自定义颜色，默认为蓝色
+testing，是否启用接口测试模块，默认值 false
+例如：
+{
+  "name": "A3项目文档中心",
+  "ver": "",
+  "logo": "http://abc.com/logo.jpg",
+  "testing": true
+}
+
+6、保持 config.json 处于当前打开状态，在 Atom 菜单点击：
+
+amWiki文库 -> 通过“config.json”创建新文库
+
+7、此时项目中自动创建了许多内容，其中 library 文件夹即为您的文库文件夹
+
+8、使用 F12 启动本地静态服务器，访问刚刚自动创建的 index.html
+
+9、文库目录结构
+
+项目目录自动生创建的内容如下
+
+index.html                 // http 访问入口页面
+amWiki/                    // amWiki Web 端程序文件夹
+library/                   // 您的 Markdown 文库目录，所有文件必须使用 .md 格式
+   ├ $navigation.md        // amWiki 文库目录导航文件，可自动/手动更新
+   ├ 首页.md                // Web 端打开页面时页面页面默认显示的内容
+   ├ 001-学习amWiki/        // Markdown 文件夹01
+   │   ├ 001-关于amWiki     // 一些 Markdown 文档，支持二级目录
+   │   └ 002-...
+   ├ 002-文档示范/          // Markdown 文件夹02
+   │   ├ 001-通用api        // 一些 Markdown 文档，支持二级目录
+   │   └ 002-...
+   └ 003-...               // 更多 Markdown 文件夹
+(assetes/)                 // 如果您粘帖截图，图片文件将自动创建在此处
+
+
+10、安装visual studio code 
+11、安装amWiKiForVSCode markdown、paste image等插件
+12、使用Visual studio code打开amWiKi文档
+13、设置paste image配置，创建图片路径
+
+
+问题：
+采用paste image插件插入的图片在visual studio code的编辑界面下可以正常预览，但在ATOM界面下按F12使用浏览器查看，无法显示图片的问题
+
+这个问题的原因可以存在两个：
+1、ATOM没有汉化，并不支持中文，这时如果你的图片路径中有中文时，ATOM生成静态网页会将中文过滤，导致图片显示不出来
+2、在ATOM编辑器下按F12生成的静态网页并没有在WEB服务器的根目录下，而是由ATOM生成的临时文件夹下，而在visual studio code插入图片采用是根目录寻址操作，这时图片拷贝到ATOM生成的临时文件夹下，导致图片路径找不到。显示不出来。这个没有太大的问题，在文档完成后，采用ATOM命令生成静态网页后，将网页放在WEB根目录下就可以顺利访问。
